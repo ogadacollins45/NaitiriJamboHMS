@@ -1,0 +1,18 @@
+export const MEDICATION_FREQUENCIES = [
+    { code: "OD", description: "Once daily" },
+    { code: "BID", description: "Twice daily" },
+    { code: "TID", description: "Three times daily" },
+    { code: "QID", description: "Four times daily" },
+    { code: "q4h", description: "Every 4 hours" },
+    { code: "q6h", description: "Every 6 hours" },
+    { code: "q8h", description: "Every 8 hours" },
+    { code: "q12h", description: "Every 12 hours" },
+    { code: "NOCTE", description: "At night" },
+    { code: "HS", description: "At bedtime" },
+    { code: "PRN", description: "As needed" },
+    { code: "STAT", description: "Immediately" },
+    { code: "AC", description: "Before meals" },
+    { code: "PC", description: "After meals" },
+    { code: "WEEKLY", description: "Once per week" },
+    { code: "MONTHLY", description: "Once per month" },
+];
