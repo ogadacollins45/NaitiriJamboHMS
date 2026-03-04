@@ -6,12 +6,12 @@ return [
     'allowed_methods' => ['*'],
 
     'allowed_origins' => [
-        'https://chidstal-hmsv-2.vercel.app',
+        'https://naitiri-jambo-v2.vercel.app',
         'http://localhost:5173',
-        'brixtonmakunga.com',
-        'https://brixtonmakunga.com',
-        'www.brixtonmakunga.com',
-        'https://www.brixtonmakunga.com'
+        'naitirijambo.com',
+        'https://naitirijambo.com',
+        'www.naitirijambo.com',
+        'https://www.naitirijambo.com'
     ],
 
     'allowed_origins_patterns' => [],
