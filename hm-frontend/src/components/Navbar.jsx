@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { useSidebar } from "../context/SidebarContext";
 import { Moon, Sun, LogOut, User, Menu, X, Maximize, Minimize } from "lucide-react";
-import NotificationBell from "./NotificationBell";
 
 const Navbar = () => {
   const { user, logout } = useContext(AuthContext);
@@ -89,10 +88,7 @@ const Navbar = () => {
               {isFullscreen ? <Minimize className="w-5 h-5" /> : <Maximize className="w-5 h-5" />}
             </button>
 
-            {/* Notification Bell — only for doctor and admin */}
-            {user && ["doctor", "admin"].includes(user.role) && (
-              <NotificationBell />
-            )}
+
 
             {/* User info */}
             {user ? (
@@ -170,10 +166,7 @@ const Navbar = () => {
             >
               {isFullscreen ? <Minimize className="w-5 h-5" /> : <Maximize className="w-5 h-5" />}
             </button>
-            {/* Notification Bell - mobile */}
-            {user && ["doctor", "admin"].includes(user.role) && (
-              <NotificationBell />
-            )}
+
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               className={`p-2 rounded-lg transition-all ${darkMode

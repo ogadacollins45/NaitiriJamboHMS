@@ -9,7 +9,6 @@ import {
 
 import { AuthProvider } from "./context/AuthContext.jsx";
 import { SidebarProvider } from "./context/SidebarContext.jsx";
-import { NotificationProvider } from "./context/NotificationContext.jsx";
 import PrivateRoute from "./components/PrivateRoute.jsx";
 import RoleBasedRoute from "./components/RoleBasedRoute.jsx";
 
@@ -65,7 +64,7 @@ import "./index.css";
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <AuthProvider>
-      <NotificationProvider>
+
         <SidebarProvider>
           <Router>
             <Routes>
@@ -158,7 +157,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             </Routes>
           </Router>
         </SidebarProvider>
-      </NotificationProvider>
+
     </AuthProvider>
   </React.StrictMode>
 );
