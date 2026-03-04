@@ -41,8 +41,8 @@ done
 # Only run migrations if database is available
 if php artisan db:show 2>/dev/null; then
   echo "Running database migrations..."
-# php artisan migrate --force
-  php artisan migrate:fresh --seed --force
+php artisan migrate --force
+  # php artisan migrate:fresh --seed --force
 else
   echo "Skipping migrations - database not available"
 fi
