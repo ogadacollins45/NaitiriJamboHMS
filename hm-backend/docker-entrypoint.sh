@@ -10,7 +10,7 @@ ln -sf /etc/apache2/mods-available/mpm_prefork.load /etc/apache2/mods-enabled/mp
 ln -sf /etc/apache2/mods-available/mpm_prefork.conf /etc/apache2/mods-enabled/mpm_prefork.conf
 echo "MPM prefork enabled successfully"
 
-# Set global ServerName to suppress Apache warnings
+# Set global ServerName to suppress Apache warnings,
 echo "ServerName naitirijambohms-production.up.railway.app" >> /etc/apache2/apache2.conf
 
 # Configure Apache to use PORT environment variable (for Railway)
