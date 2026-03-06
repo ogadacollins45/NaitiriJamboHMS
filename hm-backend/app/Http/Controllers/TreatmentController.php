@@ -69,6 +69,7 @@ class TreatmentController extends Controller
      */
     public function store(Request $request, $patient_id)
     {
+        try {
         $validated = $request->validate([
             'visit_date'           => 'required|date',
             'diagnosis'            => 'nullable|string|max:255',
@@ -212,7 +213,20 @@ class TreatmentController extends Controller
             'treatment' => $treatment->load('doctor'),
             'bill'      => $billData,     // includes patient.bills (PAST RECEIPTS)
         ], 201);
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            throw $e; // Let Laravel handle validation errors normally (422)
+        } catch (\Throwable $e) {
+            Log::error('TreatmentController::store FAILED: ' . $e->getMessage() . ' in ' . $e->getFile() . ':' . $e->getLine());
+            return response()->json([
+                'error'   => $e->getMessage(),
+                'file'    => $e->getFile(),
+                'line'    => $e->getLine(),
+                'class'   => get_class($e),
+            ], 400); // 400 so CDN doesn't strip body
+        }
     }
+
 
     /**
      * Update a treatment record
