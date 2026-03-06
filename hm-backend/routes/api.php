@@ -18,8 +18,7 @@ use App\Http\Controllers\{
     DatabaseManagementController,
     MainStoreDrugController,
     DrugMigrationController,
-    AdmissionController,
-    NotificationController
+    AdmissionController
 };
 
 // Health check endpoint (no authentication required)
@@ -29,19 +28,6 @@ Route::get('/health', function () {
         'timestamp' => now()->toIsoString(),
         'service' => 'Naitiri Jambo HMS API'
     ], 200);
-});
-
-// TEMPORARY DEBUG ENDPOINT - remove after diagnosing
-Route::get('/debug/last-error', function (\Illuminate\Http\Request $request) {
-    if ($request->query('key') !== 'njhms-debug-2026') {
-        return response()->json(['error' => 'forbidden'], 403);
-    }
-    $logFile = storage_path('logs/laravel.log');
-    if (!file_exists($logFile)) {
-        return response()->json(['log' => 'No log file found']);
-    }
-    $lines = array_slice(file($logFile), -80);
-    return response()->json(['log' => implode('', $lines)]);
 });
 
 /** Patients, Treatments, and Diagnoses */
@@ -329,9 +315,4 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/admissions/{id}/discharge', [AdmissionController::class, 'discharge']);
     Route::get('/admissions/{id}/bill', [AdmissionController::class, 'getBill']);
     Route::get('/patients/{patientId}/active-admission', [AdmissionController::class, 'getActiveForPatient']);
-
-    // ===== Notifications =====
-    Route::get('/notifications', [NotificationController::class, 'index']);
-    Route::post('/notifications/read-all', [NotificationController::class, 'markAllRead']);
-    Route::post('/notifications/{id}/read', [NotificationController::class, 'markRead']);
 });

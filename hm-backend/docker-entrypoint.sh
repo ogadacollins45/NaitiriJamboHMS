@@ -11,7 +11,7 @@ ln -sf /etc/apache2/mods-available/mpm_prefork.conf /etc/apache2/mods-enabled/mp
 echo "MPM prefork enabled successfully"
 
 # Set global ServerName to suppress Apache warnings
-echo "ServerName chidstalhmsv2-production.up.railway.app" >> /etc/apache2/apache2.conf
+echo "ServerName naitirijambohms-production.up.railway.app" > /etc/apache2/apache2.conf
 
 # Configure Apache to use PORT environment variable (for Railway)
 PORT=${PORT:-80}
@@ -56,13 +56,6 @@ echo "Setting up storage link..."
 php artisan storage:link || true
 
 echo "Application ready!"
-
-# Start Reverb WebSocket server in the background
-# Runs on port 8080 (or REVERB_PORT env var) alongside Apache
-REVERB_PORT=${REVERB_PORT:-8080}
-echo "Starting Reverb WebSocket server on port $REVERB_PORT..."
-php artisan reverb:start --host=0.0.0.0 --port=$REVERB_PORT >> /var/www/html/storage/logs/reverb.log 2>&1 &
-echo "Reverb started (PID $!), logs at storage/logs/reverb.log"
 
 # Execute the main container command (Apache)
 exec "$@"
