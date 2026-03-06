@@ -27,28 +27,31 @@ Route::get('/health', function () {
     return response()->json([
         'status' => 'ok',
         'timestamp' => now()->toIso8601String(),
-        'service' => 'Brixton HMS API'
+        'service' => 'Naitiri Jambo HMS API'
     ], 200);
 });
 
-Route::get('/patients', [PatientController::class, 'index']);
-Route::get('/patients/incomplete', [PatientController::class, 'getIncompletePatients']);
-Route::post('/patients', [PatientController::class, 'store']);
-Route::get('/patients/{id}', [PatientController::class, 'show']);
-Route::put('/patients/{id}', [PatientController::class, 'update']);
+/** Patients, Treatments, and Diagnoses */
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/patients', [PatientController::class, 'index']);
+    Route::get('/patients/incomplete', [PatientController::class, 'getIncompletePatients']);
+    Route::post('/patients', [PatientController::class, 'store']);
+    Route::get('/patients/{id}', [PatientController::class, 'show']);
+    Route::put('/patients/{id}', [PatientController::class, 'update']);
 
-Route::get('/patients/{id}/treatments', [TreatmentController::class, 'index']);
-Route::post('/patients/{id}/treatments', [TreatmentController::class, 'store']);
-Route::get('/treatments/today', [TreatmentController::class, 'getTodaysTreatments']);
-Route::put('/treatments/{id}', [TreatmentController::class, 'update']);
-Route::delete('/treatments/{id}', [TreatmentController::class, 'destroy']);
+    Route::get('/patients/{id}/treatments', [TreatmentController::class, 'index']);
+    Route::post('/patients/{id}/treatments', [TreatmentController::class, 'store']);
+    Route::get('/treatments/today', [TreatmentController::class, 'getTodaysTreatments']);
+    Route::put('/treatments/{id}', [TreatmentController::class, 'update']);
+    Route::delete('/treatments/{id}', [TreatmentController::class, 'destroy']);
 
-// Diagnosis routes
-Route::post('/treatments/{id}/diagnoses', [DiagnosisController::class, 'store']);
-Route::delete('/diagnoses/{id}', [DiagnosisController::class, 'destroy']);
+    // Diagnosis routes
+    Route::post('/treatments/{id}/diagnoses', [DiagnosisController::class, 'store']);
+    Route::delete('/diagnoses/{id}', [DiagnosisController::class, 'destroy']);
 
-Route::get('/doctors', [DoctorController::class, 'index']);
-Route::post('/doctors', [DoctorController::class, 'store']);
+    Route::get('/doctors', [DoctorController::class, 'index']);
+    Route::post('/doctors', [DoctorController::class, 'store']);
+});
 
 Route::get('/patients/{id}/appointments', [AppointmentController::class, 'index']);
 Route::get('/appointments', [AppointmentController::class, 'index']); // For doctor filtering
@@ -146,8 +149,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/me', [AuthController::class, 'me']);
     Route::post('/logout', [AuthController::class, 'logout']);
 
-    // ✅ Protect everything else (patients, billing, etc)
-    Route::apiResource('patients', PatientController::class);
+    // ✅ Protected Resources
     Route::apiResource('staff', StaffController::class);
     Route::get('/dashboard', [DashboardController::class, 'index']);
 
