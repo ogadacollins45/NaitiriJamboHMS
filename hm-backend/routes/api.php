@@ -26,9 +26,22 @@ use App\Http\Controllers\{
 Route::get('/health', function () {
     return response()->json([
         'status' => 'ok',
-        'timestamp' => now()->toIso8601String(),
+        'timestamp' => now()->toIsoString(),
         'service' => 'Naitiri Jambo HMS API'
     ], 200);
+});
+
+// TEMPORARY DEBUG ENDPOINT - remove after diagnosing
+Route::get('/debug/last-error', function (\Illuminate\Http\Request $request) {
+    if ($request->query('key') !== 'njhms-debug-2026') {
+        return response()->json(['error' => 'forbidden'], 403);
+    }
+    $logFile = storage_path('logs/laravel.log');
+    if (!file_exists($logFile)) {
+        return response()->json(['log' => 'No log file found']);
+    }
+    $lines = array_slice(file($logFile), -80);
+    return response()->json(['log' => implode('', $lines)]);
 });
 
 /** Patients, Treatments, and Diagnoses */
